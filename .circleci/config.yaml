@@ -2,13 +2,12 @@ version: 2
 jobs:
   build:
     docker:
-      - image: debian:stretch
+      - image: oraclelinux
     steps:
       - checkout
       - run:
-          name: Greeting
-          command: echo Hello, world.
-      - run:
-          name: Print the Current Time
-          command: date
-
+          name: Build and push Docker image
+          command: |
+            docker build -t base-docker-image:latest .
+            docker login -u $DOCKER_LOGIN -p $DOCKER_PASSWORD
+            docker push aburan28/base-docker-image:latest
